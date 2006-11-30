@@ -2,7 +2,6 @@
 \alias{residuals.spm}
 \title{Residuals for semiparametric regression.}
 \description{Extracts residuals from a semiparametric regression fit object.}
-}
 \usage{
 residuals.spm(object,...)
 }
@@ -37,8 +36,8 @@ variable and the fitted values.}
 \code{\link{plot.spm}} 
 \code{\link{lines.spm}}
 \code{\link{predict.spm}}
-\code{\link{summary.spm}}}
-\code{\link{fitted.spm}}
+\code{\link{summary.spm}}
+\code{\link{fitted.spm}}}
 
 \examples{
 library(SemiPar)

@@ -3,8 +3,7 @@
 \title{Add a curves to an existing plot.}
 \description{Takes a fitted \code{spm} object produced by \code{spm()} and 
 adds a curve. The function is only appropriate in the case 
-of a single predictor.
-}
+of a single predictor.}
 \usage{
 lines.spm(x,...)
 }
@@ -36,12 +35,14 @@ of a single predictor.}
 \email{wand@maths.unsw.edu.au}
 (other contributors listed in SemiPar Users' Manual).}
 
-\seealso{\code{\link{spm}}
+\seealso{
+\code{\link{spm}}
 \code{\link{plot.spm}}
 \code{\link{predict.spm}}
-\code{\link{summary.spm}}}
+\code{\link{summary.spm}}
 \code{\link{residuals.spm}}
 \code{\link{fitted.spm}}
+}
 
 \examples{
 library(SemiPar)

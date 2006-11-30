@@ -3,7 +3,7 @@
 # For determining those points are inside
 # a polygon specified by "vertices"
 
-# Last changed: 18 JAN 2005
+# Last changed: 16 NOV 2006
 
 pointsInPoly <- function(point.coords, vertices)
 {
@@ -26,7 +26,7 @@ pointsInPoly <- function(point.coords, vertices)
    arg1 <- x * y[, i2] - y * x[, i2]
    arg2 <-  x * x[, i2] + y * y[, i2]
 
-   theta <- atan(arg1,arg2)
+   theta <- atan2(arg1,arg2)
 
    # Sum angles about each point
 

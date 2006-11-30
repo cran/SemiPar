@@ -1,4 +1,4 @@
-###### S-function: default.knots.2D ##########
+###### R-function: default.knots.2D ##########
 
 # Computes default knots for a given
 # x vector based on the `clara' algorithm

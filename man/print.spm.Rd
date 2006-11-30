@@ -3,7 +3,6 @@
 \title{Prints semiparametric regression fit object.}
 \description{Prints a brief description of a 
 semiparametric regression fit object to the screen.}
-}
 \usage{
 print.spm(x,...)
 }
@@ -37,9 +36,9 @@ semiparametric regression fit object to the screen.}
 \code{\link{plot.spm}} 
 \code{\link{lines.spm}}
 \code{\link{predict.spm}}
-\code{\link{summary.spm}}}
+\code{\link{summary.spm}}
 \code{\link{residuals.spm}}
-\code{\link{fitted.spm}}
+\code{\link{fitted.spm}}}
 
 \examples{
 library(SemiPar)

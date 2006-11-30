@@ -2,9 +2,7 @@
 \alias{summary.spm}
 \title{Semiparametric regression summary}
 \description{Takes a fitted \code{spm} object produced by 
-\code{spm()} and summarises the fit.
-}
-}
+\code{spm()} and summarises the fit.}
 \usage{
 summary.spm(object,...)
 }
@@ -39,8 +37,9 @@ freedom values and other information.}
 
 \seealso{
 \code{\link{spm}}
-\code{\link{plot.spm}}}
+\code{\link{plot.spm}}
 \code{\link{predict.spm}}
+}
 
 \examples{
 library(SemiPar)

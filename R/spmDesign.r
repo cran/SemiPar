@@ -1,9 +1,9 @@
-###### S-function: spmDesign ##########
+########## S-function: spmDesign ##########
 
 # For creating the design matrices for
 # a semiparametric model.
 
-# Last changed: 18 JAN 2005
+# Last changed: 22 SEP 2005
 
 spmDesign <- function(spm.info)
 {  
@@ -200,6 +200,10 @@ spmDesign <- function(spm.info)
    if (!intercept.only)
       X <- cbind(rep(1,nrow(X)),X)
 
+   # Save spline component of Z separately.
+
+   Z.spline <- Z
+
    # If random term present then add on Kronecker-type
    # intercept structure to Z matrix
 
@@ -227,11 +231,13 @@ spmDesign <- function(spm.info)
       trans.mat <- c(trans.mat,list(NULL))
    }
 
+   if (is.null(spm.info$krige)) sqrt.Omega.krige <- NULL
+
    # Return spm() fit object
 
-   if (is.null(spm.info$krige)) sqrt.Omega.krige <- NULL
-   return(list(spm.info=spm.info,X=X,Z=Z,trans.mat=trans.mat,
-                block.inds=block.inds,re.block.inds=re.block.inds))   
+   return(list(spm.info=spm.info,X=X,Z=Z,Z.spline=Z.spline,
+               trans.mat=trans.mat,block.inds=block.inds,
+               re.block.inds=re.block.inds))   
                 
 }
 

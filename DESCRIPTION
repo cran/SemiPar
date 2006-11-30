@@ -1,5 +1,5 @@
 Package: SemiPar
-Version: 1.0-1
+Version: 1.0-2
 Title: Semiparametic Regression
 Author: Matt Wand <wand@maths.unsw.edu.au>
 Maintainer: Matt Wand <wand@maths.unsw.edu.au>
@@ -10,4 +10,4 @@ Description: Functions for semiparametric regression analysis,
              Semiparametric Regression. Cambridge University Press.
 License: GPL (version 2 or later)
 URL: http://www.maths.unsw.edu.au/~wand/SPmanu.pdf
-Packaged: Mon Apr  4 11:58:49 2005; wand
+Packaged: Thu Nov 30 12:20:01 2006; wand

@@ -3,7 +3,6 @@
 \title{Fitted values for semiparametric regression.}
 \description{Extracts fitted values from a semiparametric 
 regression fit object.}
-}
 \usage{
 fitted.spm(object,...)
 }
@@ -35,12 +34,14 @@ fitted regression model.}
 \email{wand@maths.unsw.edu.au}
 (other contributors listed in SemiPar Users' Manual).}
 
-\seealso{\code{\link{spm}}
+\seealso{
+\code{\link{spm}}
 \code{\link{plot.spm}} 
 \code{\link{lines.spm}}
 \code{\link{predict.spm}}
-\code{\link{summary.spm}}}
+\code{\link{summary.spm}}
 \code{\link{residuals.spm}}
+}
 
 \examples{
 library(SemiPar)

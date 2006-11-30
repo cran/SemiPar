@@ -1,4 +1,4 @@
-###### S-function: default.knots ##########
+###### R-function: default.knots ##########
 
 # Computes default knots for a given
 # x vector.
