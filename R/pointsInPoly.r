@@ -3,14 +3,14 @@
 # For determining those points are inside
 # a polygon specified by "vertices"
 
-# Last changed: 16 NOV 2006
+# Last changed: 05 JUN 2009
 
 pointsInPoly <- function(point.coords, vertices)
 {
    if (vertices[1,1]!=vertices[nrow(vertices),1]) 
-      vertices <- rbind(vertices[,1])
+      vertices <- rbind(vertices,vertices[,1])
    if (vertices[1,2]!=vertices[nrow(vertices),2]) 
-      vertices <- rbind(vertices[,1])
+      vertices <- rbind(vertices,vertices[,1])
 
    n <- nrow(vertices) - 1
 
@@ -32,7 +32,7 @@ pointsInPoly <- function(point.coords, vertices)
 
    theta <- abs(theta %*% rep(1, n))
 
-   return(ifelse(abs(theta - 2*pi) < 1e-06, T, F))
+   return(ifelse(abs(theta - 2*pi) < 1e-06, TRUE, FALSE))
 }
 
 ########## End of pointsInPoly ##########

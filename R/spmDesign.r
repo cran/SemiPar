@@ -170,7 +170,7 @@ spmDesign <- function(spm.info)
 
       prelim.Z <- tps.cov(x.knot.dists,m=m.krige,d=2)
 
-      # Transform mixed model to canonical form 
+      # Transform to mixed model canonical form 
       # (covariance matrix of random effects is multiple
       # of identity)
 

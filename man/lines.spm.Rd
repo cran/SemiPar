@@ -5,15 +5,12 @@
 adds a curve. The function is only appropriate in the case 
 of a single predictor.}
 \usage{
-lines.spm(x,...)
+\method{lines}{spm}(x,...)
 }
 \arguments{ 
-  
 \item{x}{a fitted \code{spm} object as produced by \code{spm()}.}
-
 \item{...}{other graphics parameters described in Appendix B of 
-the SemiPar Users' Manual \url{http:www.maths.unsw.edu.au/~wand/papers.html}}
-
+the SemiPar Users' Manual \url{http:uow.edu.au/~mwand/SPmanu.pdf}}
 }
 \details{Takes a fitted \code{spm} object produced by \code{spm()} and 
 adds a curve. The function is only appropriate in the case 
@@ -29,10 +26,10 @@ of a single predictor.}
 
      Ganguli, B. and Wand, M.P. (2005)\cr
      \emph{SemiPar 1.0 Users' Manual}.\cr
-     \url{http://www.maths.unsw.edu.au/~wand/papers.html}
+     \url{http://www.uow.edu.au/~mwand/SPmanu.pdf}
 }
 \author{M.P. Wand 
-\email{wand@maths.unsw.edu.au}
+\email{mwand@uow.edu.au}
 (other contributors listed in SemiPar Users' Manual).}
 
 \seealso{

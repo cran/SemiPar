@@ -8,7 +8,6 @@ The \code{scallop} data frame has 148 triplets
 concerning scallop abundance; based
 on a 1990 survey cruise in the Atlantic continental
 shelf off Long Island, New York, U.S.A.}
-}
 \format{
   This data frame contains the following columns:
   \describe{

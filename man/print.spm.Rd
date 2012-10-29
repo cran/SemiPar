@@ -4,7 +4,7 @@
 \description{Prints a brief description of a 
 semiparametric regression fit object to the screen.}
 \usage{
-print.spm(x,...)
+\method{print}{spm}(x,...)
 }
 \arguments{ 
   
@@ -26,10 +26,10 @@ semiparametric regression fit object to the screen.}
 
      Ganguli, B. and Wand, M.P. (2005)\cr
      \emph{SemiPar 1.0 Users' Manual}.\cr
-     \url{http://www.maths.unsw.edu.au/~wand/papers.html}
+     \url{http://www.uow.edu.au/~mwand/SPmanu.pdf}
 }
 \author{M.P. Wand 
-\email{wand@maths.unsw.edu.au}
+\email{mwand@uow.edu.au}
 (other contributors listed in SemiPar Users' Manual).}
 
 \seealso{\code{\link{spm}}
