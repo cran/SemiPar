@@ -18,7 +18,7 @@ blend.col <- function(stt.col,end.col,n=100)
    hex.vec <- NULL
    for (i in 1:n)
       hex.vec <- c(hex.vec,rgb(blend.mat[i,1],blend.mat[i,2],
-                   blend.mat[i,3],max=255))
+                   blend.mat[i,3],maxColorValue=255))
 
    return(hex.vec)
 }

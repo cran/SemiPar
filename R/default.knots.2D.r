@@ -8,7 +8,6 @@
 
 default.knots.2D <- function(x1,x2,num.knots)
 {
-   require("cluster")
 
    # Set default value for num.knots
 
@@ -21,22 +20,22 @@ default.knots.2D <- function(x1,x2,num.knots)
 
    dup.inds <- (1:nrow(X))[dup.matrix(X)==T]
 
-   if (length(dup.inds) > 0)   
+   if (length(dup.inds) > 0)
       X <- X[-dup.inds,]
 
    # Obtain and output knots chosen using
    # coverage design principles
 
-   knots <- clara(X,num.knots)$medoids
- 
+   knots <- cluster::clara(X,num.knots)$medoids
+
    # Display the knots.
- 
+
    plot(x1,x2,xlab="",ylab="",bty="n",pch=1,xaxt="n",yaxt="n")
    points(knots[,1],knots[,2],col="red",lwd=3,cex=2)
 
    cat("\n\n")
    cat("   The knots chosen by default are displayed\n")
-   cat("   in the accompanying graphics window (thick red circles),\n") 
+   cat("   in the accompanying graphics window (thick red circles),\n")
    cat("   along with the bivariate predictors (ordinary circles).\n")
    cat("   If the knots do not seem to provide adequate coverage\n")
    cat("   then you may want to try selecting them again using \n")
@@ -53,16 +52,16 @@ default.knots.2D <- function(x1,x2,num.knots)
    # Ask user if knots are to be saved in a file.
 
    cat("\n\n Would you like to save these knots in a file? (y/n): ")
-      
+
    ans <- readline()
- 
+
    if (ans=="y")
    {
       cat("\n\n Enter filename for storage of knots: ")
 
       knots.filename <- readline()
 
-      write(t(knots),file=knots.filename,ncol=2)
+      write(t(knots),file=knots.filename,ncolumns=2)
    }
 
    return(knots)

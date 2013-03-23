@@ -6,8 +6,8 @@
 
 spm <- function(form,random=NULL,group=NULL,family="gaussian",
                spar.method="REML",omit.missing=NULL)
-{ 
-   require("nlme")
+{
+##   require("nlme")
 
    # Read in primary information
 
@@ -15,25 +15,25 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
    # Read in random effect information if present
 
-   random.info <- NULL 
+   random.info <- NULL
    if (!is.null(random))
    {
       random.info <- random.read(random,group)
-      spm.info <- c(spm.info,list(random=random.info))    
-      group <- as.numeric(factor(group))  
+      spm.info <- c(spm.info,list(random=random.info))
+      group <- as.numeric(factor(group))
    }
 
    # Put in safeguard against zero smoothing parameters.
 
    if (!is.null(unlist(spm.info$pen$spar)))
    {
-      if (any(unlist(spm.info$pen$spar)==0)) 
+      if (any(unlist(spm.info$pen$spar)==0))
          stop("zero smoothing parameters not supported in current version.")
    }
 
    # Create required matrices
 
-   design.info <- spmDesign(spm.info) 
+   design.info <- spmDesign(spm.info)
 
    X <- design.info$X
    Z <- design.info$Z
@@ -58,13 +58,13 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       auto.spar.select <- TRUE
 
    if (!is.null(spm.info$pen))
-   {  
+   {
       auto.spar <- 0
 
       for (j in 1:length(spm.info$pen$name))
-         auto.spar <- (auto.spar + 
+         auto.spar <- (auto.spar +
          (is.null(spm.info$pen$spar[[j]])&(spm.info$pen$adf[[j]]=="miss")))
-          
+
        if (auto.spar > 0)
           auto.spar.select <- TRUE
    }
@@ -76,8 +76,8 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
         auto.spar.select <- TRUE
    }
 
-   # If not automatic smoothing parameter selection do 
-   # "df-to-spar" conversion if required, and create 
+   # If not automatic smoothing parameter selection do
+   # "df-to-spar" conversion if required, and create
    # G-matrix
 
    if (auto.spar.select==FALSE)
@@ -92,7 +92,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
       compon.num <- 1
       if (!is.null(spm.info$pen))
-      {            
+      {
          basis.type <- spm.info$pen$basis
 
          for (j in 1:ncol(as.matrix(spm.info$pen$x)))
@@ -107,8 +107,8 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
                stt.ind <- block.inds[[compon.num+num.lin+1]][1]
 
-               ncol.Xj <- length(block.inds[[compon.num+num.lin+1]])  
-               ncol.Xj <- ncol.Xj - length(re.block.inds[[compon.num]])     
+               ncol.Xj <- length(block.inds[[compon.num+num.lin+1]])
+               ncol.Xj <- ncol.Xj - length(re.block.inds[[compon.num]])
 
                Xj <- X[,stt.ind:(stt.ind+ncol.Xj-1)]
 
@@ -121,11 +121,11 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
                Zj <- Z[,re.block.inds[[compon.num]]]
 
                adf.val <- spm.info$pen$adf[[j]]
-             
+
                if (family=="gaussian")
                   spar.val <- df.to.spar(adf.val+1,Xj,Zj)
 
-               if (!family=="gaussian") 
+               if (!family=="gaussian")
                   spar.val <- glm.df.to.spar(adf.val+1,y,Xj,Zj,family)
 
                if (basis.type=="trunc.poly")
@@ -146,18 +146,18 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
             # Extract X matrix for current component
 
             stt.ind <- block.inds[[compon.num+num.lin+1]][1]
-            ncol.Xj <- length(block.inds[[compon.num+num.lin+1]])  
-            ncol.Xj <- ncol.Xj - length(re.block.inds[[compon.num]])     
+            ncol.Xj <- length(block.inds[[compon.num+num.lin+1]])
+            ncol.Xj <- ncol.Xj - length(re.block.inds[[compon.num]])
 
             Xj <- X[,stt.ind:(stt.ind+ncol.Xj-1)]
- 
+
             # Add column of ones for intercept
 
             Xj <- cbind(col.ones,Xj)
 
             Zj <- Z[,re.block.inds[[compon.num]]]
             adf.val <- spm.info$krige$adf[[1]]
-             
+
             if (family=="gaussian")
                spar.val <- df.to.spar(adf.val+1,Xj,Zj)
 
@@ -174,13 +174,13 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
       # Create G matrix
 
-      diag.G <- NULL    
+      diag.G <- NULL
       if (!is.null(spm.info$pen))
          for (j in 1:ncol(as.matrix(spm.info$pen$x)))
          {
             deg.val <- spm.info$pen$degree[j]
-            spar.val <- spm.info$pen$spar[[j]] 
-            num <- length(spm.info$pen$knots[[j]]) 
+            spar.val <- spm.info$pen$spar[[j]]
+            num <- length(spm.info$pen$knots[[j]])
             if (basis.type=="trunc.poly")
                diag.G <- c(diag.G,
                            rep(1/(exp((2*deg.val)*log(spar.val))),num))
@@ -194,10 +194,10 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
          spar.val <- spm.info$krige$spar
          num.knots <- nrow(spm.info$krige$knots)
          diag.G <- c(diag.G,rep((1/spar.val^2),num.knots))
-      }  
+      }
    }
 
-   # Set up inputs for mixed model functions. 
+   # Set up inputs for mixed model functions.
 
    dummy.group.vec <- col.ones
    fdummy.group.vec <- factor(dummy.group.vec)
@@ -227,21 +227,20 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
          if (length(re.block.inds)==1)
          {
             if (family=="gaussian")
-               lme.fit <- lme(y~-1+X.Declan,random=pdIdent(~-1+Z.Jaida),
+               lme.fit <- nlme::lme(y~-1+X.Declan,random=pdIdent(~-1+Z.Jaida),
                               data=data.fr,method=spar.method)
             if (family!="gaussian")
             {
-               require("MASS")
-               lme.fit <- glmmPQL(y~-1+X.Declan,
+               lme.fit <- MASS::glmmPQL(y~-1+X.Declan,
                random=list(dummy.group.vec.Handan=pdIdent(~-1+Z.Jaida)),
                            data=data.fr,family=family)
             }
          }
-     
+
          if (length(re.block.inds)>1)
          {
             if (family=="gaussian")
-               lme.fit <- lme(y~-1+X.Declan,
+               lme.fit <- nlme::lme(y~-1+X.Declan,
                            random=list(dummy.group.vec.Handan=
                            pdBlocked(Z.block,
                            pdClass=rep("pdIdent",length(Z.block)))),
@@ -249,8 +248,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
             if (family!="gaussian")
             {
-               require("MASS")
-               lme.fit <- glmmPQL(y~-1+X.Declan,
+               lme.fit <- MASS::glmmPQL(y~-1+X.Declan,
                            random=list(dummy.group.vec.Handan=
                            pdBlocked(Z.block,pdClass=
                            rep("pdIdent",length(Z.block)))),
@@ -276,15 +274,14 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
                                         # effects model.
          {
             if (family=="gaussian")
-               stop("implement later; use pigs to test")  
+               stop("implement later; use pigs to test")
 
             if (family!="gaussian")
             {
-               require("MASS")
-               stop("implement later; use Poisson simul to test")  
+               stop("implement later; use Poisson simul to test")
             }
          }
-     
+
          if (length(re.block.inds)>1)
          {
             if (family=="gaussian")
@@ -299,14 +296,13 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
                           data=data.frame(y,X.Declan,Z.spline.Jaida,group))
 
 
-               lme.fit <- lme(y~-1+X.Declan,data=data.fr,random=Z.block,
+               lme.fit <- nlme::lme(y~-1+X.Declan,data=data.fr,random=Z.block,
                               method=spar.method)
-            } 
+            }
 
             if (family!="gaussian")
             {
-               require("MASS")
-               lme.fit <- glmmPQL(y~-1+X.Declan,
+               lme.fit <- MASS::glmmPQL(y~-1+X.Declan,
                            random=list(dummy.group.vec.Handan=
                            pdBlocked(Z.block,pdClass=
                            rep("pdIdent",length(Z.block)))),
@@ -318,10 +314,10 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       # Add sigma to object
 
       lme.fit <- c(lme.fit,list(sigma=summary(lme.fit)$sigma))
-   }  
+   }
 
    if (is.null(Z))
-   {      
+   {
       data.fr <- cbind(y,X.Declan,dummy.group.vec.Handan)
       G <- NULL
 
@@ -353,19 +349,19 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
          }
 
          # Build lme.fit object
-   
+
          lme.fit <- list()
          lme.fit$coef$fixed <-  glm.fit$coef
          lme.fit$coef$random <- NULL
          lme.fit$loglik <- NULL
       }
-   }   
+   }
 
    # Coerce the random coefficients into an array
    # and store the G matrix.
 
-   if (!is.null(Z)) 
-   {     
+   if (!is.null(Z))
+   {
       lme.fit$coef$random <- unlist(lme.fit$coef$random)
       sig.u.hat <- lme.fit$sigma*exp(unlist(lme.fit$modelStruct))
 
@@ -377,37 +373,37 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       G <- diag(diag.sqrt.G^2)
    }
 
-   # Store the smoothing parameters and      
+   # Store the smoothing parameters and
    # the REML-based estimate of the residual variance
-      
-   resid.var <- lme.fit$sigma^2 
+
+   resid.var <- lme.fit$sigma^2
 
    if (auto.spar.select==FALSE)
    {
       if (family=="gaussian")
       {
          # Obtain  required QR decomposition
-      
+
          G <- resid.var*diag(diag.G)
-   
+
          qr.out <- lmeFitQr(y,X,Z,G,resid.var=resid.var)
-   
+
          coef.ests <- qr.out$coefficients[1:(ncol(X)+ncol(Z))]
-   
+
          # Build lme.fit object
-   
+
          lme.fit <- list()
-   
+
          lme.fit$coef$fixed <- coef.ests[1:ncol(X)]
          lme.fit$coef$random <- coef.ests[(1+ncol(X)):length(coef.ests)]
       }
-     
+
       if ((family!="gaussian")&(!is.null(Z)))
       {
 
          G <- diag(diag.G)
-         
-         C.mat <- cbind(X,Z) 
+
+         C.mat <- cbind(X,Z)
          ridge.vec <- c(rep(0,ncol(X)),1/diag.G)
 
          if (!is.null(spm.info$off.set))
@@ -417,27 +413,27 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
          else
             ridge.reg.fit <- irls.ridge(C.mat,y,ridge.vec=ridge.vec,
                                    max.it=50,acc=0.000001,family=family)
- 
+
          # Build lme.fit object
-   
+
          lme.fit <- list()
-   
+
          lme.fit$coef$fixed <-  ridge.reg.fit$coef[1:ncol(X)]
          lme.fit$coef$random <- ridge.reg.fit$coef[(1+ncol(X)):ncol(C.mat)]
 
          lme.fit$loglik <- NULL
-      }         
-   }  
-     
+      }
+   }
+
    if (auto.spar.select==TRUE)  # Store the smoothing parameters
-   {     
+   {
       if ((!is.null(spm.info$pen))|(!is.null(spm.info$krige)))
       {
          sigu2.hat <- rep(0,length(re.block.inds))
          if(!is.null(Z))
             for (ib in 1:length(re.block.inds))
                sigu2.hat[ib] <- diag(G)[re.block.inds[[ib]][1]]
-      
+
          if (is.null(spm.info$krige))  # pen only
          {
             basis.type <- spm.info$pen$basis
@@ -445,17 +441,17 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
             {
                deg.val <- spm.info$pen$degree[ip]
                if (basis.type=="trunc.poly")
-                  spm.info$pen$spar[[ip]] <- 
+                  spm.info$pen$spar[[ip]] <-
                      exp(log(resid.var/sigu2.hat[ip])/(2*deg.val))
                else
-                  spm.info$pen$spar[[ip]] <- 
+                  spm.info$pen$spar[[ip]] <-
                      exp(log(resid.var/sigu2.hat[ip])/deg.val)
             }
          }
 
          if (is.null(spm.info$pen))   # krige only
          {
-            deg.val <- spm.info$krige$degree 
+            deg.val <- spm.info$krige$degree
             spm.info$krige$spar <- exp(log(resid.var/sigu2.hat)/deg.val)
          }
 
@@ -475,30 +471,30 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
             num.pen <-  ncol(as.matrix(spm.info$pen$x))
             var.rat <- (resid.var/sigu2.hat[num.pen+1])
             deg.val <- spm.info$krige$degree
-            spm.info$krige$spar <- exp(log(var.rat)/deg.val)     
+            spm.info$krige$spar <- exp(log(var.rat)/deg.val)
          }
       }
    }
 
-   # Obtain auxiliary information 
- 
+   # Obtain auxiliary information
+
    if (family=="gaussian")
       aux.info <- lmeAux(X,Z,G,resid.var,block.inds)
- 
+
    if (family!="gaussian")
    {
       if (is.null(Z))
       {
-         R <- glm.fit$R	
+         R <- glm.fit$R
          rinv <- backsolve(R,diag(ncol(X)))
          cov.mat <- rinv%*%t(rinv)
-         df.fit <- ncol(X)   
+         df.fit <- ncol(X)
          df.res <- length(y) - df.fit
          df <- rep(1,ncol(X))
          random.var <- NULL
 
          aux.info <- list(cov.mat=cov.mat,df=df,block.inds=
-                          block.inds,random.var=random.var, 
+                          block.inds,random.var=random.var,
                           df.fit=df.fit,df.res=df.res)
       }
 
@@ -506,7 +502,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       {
          if (auto.spar.select==TRUE)
          {
-            C.mat <- cbind(X,Z) 
+            C.mat <- cbind(X,Z)
             diag.G <- diag(G)
             ridge.vec <- c(rep(0,ncol(X)),1/diag.G)
 
@@ -525,7 +521,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
    # Determine the range of fitted values for each
    # each component of the model
-     
+
    if(!is.null(Z))
    {
       coef.ests <- c(lme.fit$coef$fixed,lme.fit$coef$random)
@@ -536,7 +532,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       coef.ests <- lme.fit$coef$fixed
       C.mat <- X
    }
-  
+
    mins <- NULL
    maxs <- NULL
 
@@ -548,16 +544,16 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
       mins[j] <- min(fitted.j)
       maxs[j] <- max(fitted.j)
    }
-      
+
    aux.info <- c(aux.info,list(mins=mins,maxs=maxs))
-   
+
    # Determine fitted values and residuals
 
    if (family=="gaussian")
    {
       fitted <- as.vector(C.mat%*%coef.ests)
       resids <- y - fitted
-   
+
       lme.fit$fitted <- fitted
       lme.fit$residuals <- resids
    }
@@ -565,7 +561,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
    if (family!="gaussian")
    {
       eta.hat <- C.mat%*%coef.ests
- 
+
       mu.hat <- inv.link(eta.hat,family)
       fitted <- mu.hat
 
