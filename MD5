@@ -1,4 +1,4 @@
-ed2b72f7685b19b497f04f5cc7f88b93 *DESCRIPTION
+fe1134ba8158d5b2611da58c874dde98 *DESCRIPTION
 08068ff5c9d63cb0910d16f2e302e72e *NAMESPACE
 1b95e990479a9e774b52b2f11b3b2184 *R/add.model.flag.r
 b28a3f346b0ad5d3f54302ce55cedf7c *R/arg.search.r
@@ -37,7 +37,7 @@ a53d34436db192f7157768401f33f032 *R/random.read.r
 6e5734b9ff405832ee87c79d6620f833 *R/ridge.reg.r
 3f945ce5d5f2c65d3ab38623fd7b91af *R/rm.char.r
 e673e5776a0f9e301588bfbcc9732bc3 *R/set.plot.dflts.r
-00019f2c40a29a847abd3b7ec87ed2bc *R/spm.r
+8bb0bce95340eb21c8148b1f27c2d7af *R/spm.r
 c9824867b9738c95cff937751ef7eddd *R/spmArgRead.r
 c139fa6007e26a9978d1201354d035fc *R/spmDesign.r
 d631b7d206babff868d3cb807189c8da *R/spmFormRead.r

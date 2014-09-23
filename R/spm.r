@@ -4,9 +4,18 @@
 
 # Last changed: 21 NOV 2005 by MPW
 
+
 spm <- function(form,random=NULL,group=NULL,family="gaussian",
                spar.method="REML",omit.missing=NULL)
 {
+  X.Declan <- NULL
+  rm(X.Declan)
+  Z.Jaida <- NULL
+  rm(Z.Jaida)
+  Z.spline.Jaida <- NULL
+  rm(Z.spline.Jaida)
+  
+  e <- new.env()
 ##   require("nlme")
 
    # Read in primary information
@@ -15,6 +24,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
    # Read in random effect information if present
 
+   
    random.info <- NULL
    if (!is.null(random))
    {
@@ -205,17 +215,34 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
    # Assign unusual names to formula variables
    # to overcome the `scoping' problem.
 
-   assign("dummy.group.vec.Handan",dummy.group.vec,pos=1)
-   assign("fdummy.group.vec.Handan",fdummy.group.vec,pos=1)
-   assign("group.Handan",group,pos=1)
-   assign("X.Declan",X,pos=1)
+   
+   
+   assign("dummy.group.vec.Handan",dummy.group.vec,envir = as.environment(e))
+   assign("fdummy.group.vec.Handan",fdummy.group.vec,envir = as.environment(e))
+   assign("group.Handan",group,envir = as.environment(e))
+   assign("X.Declan",X,envir = as.environment(e))
+ 
+ 
+ X.Declan <<- X
 
+  dummy.group.vec.Handan <- get("dummy.group.vec.Handan" , envir = as.environment(e))
+	
    if (!is.null(Z))
    {
+     X.Declan <<- X
+     Z.Jaida <<- Z
+     Z.spline.Jaida <<- Z.spline
+        
       if (is.null(random)) # Calls to lme() and glmmPQL() are of 1 type.
       {
-         assign("Z.Jaida",Z,pos=1)
-         data.fr <- groupedData(y~-1+X.Declan|dummy.group.vec.Handan,
+        X.Declan <<- X
+        Z.spline.Jaida <<- Z.spline
+        
+        Z.Jaida <<- Z
+        
+               
+        
+         data.fr <- groupedData(y~-1 + X.Declan | dummy.group.vec.Handan,
                     data=data.frame(y,X.Declan,Z.Jaida,
                     dummy.group.vec.Handan))
 
@@ -259,8 +286,16 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
       if (!is.null(random)) # Calls to lme() and glmmPQL() are of other type.
       {
-         assign("Z.Jaida",Z,pos=1)
-         assign("Z.spline.Jaida",Z.spline,pos=1)
+         
+         
+         Z.Jaida <<- Z
+         
+     
+         
+         Z.spline.Jaida <<- Z.spline
+         
+        
+         
          data.fr <- groupedData(y~-1+X.Declan|dummy.group.vec.Handan,
                     data=data.frame(y,X.Declan,Z.Jaida,
                     dummy.group.vec.Handan))
@@ -284,6 +319,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
          if (length(re.block.inds)>1)
          {
+           
             if (family=="gaussian")
             {
 
@@ -302,6 +338,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
             if (family!="gaussian")
             {
+            
                lme.fit <- MASS::glmmPQL(y~-1+X.Declan,
                            random=list(dummy.group.vec.Handan=
                            pdBlocked(Z.block,pdClass=
@@ -318,11 +355,14 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
    if (is.null(Z))
    {
+     
+     
       data.fr <- cbind(y,X.Declan,dummy.group.vec.Handan)
       G <- NULL
 
       if (family=="gaussian")
       {
+     
 
          lm.fit <- lm(y~-1+X.Declan)
          lme.fit <- list(coef=list(fixed=lm.fit$coef),
@@ -331,8 +371,10 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
       if (family!="gaussian")
       {
+      
          if (!is.null(spm.info$off.set))
          {
+      
             if (!is.null(X))
                glm.fit <- glm(y~-1+X.Declan,
                               offset=spm.info$off.set,family=family)
@@ -342,6 +384,7 @@ spm <- function(form,random=NULL,group=NULL,family="gaussian",
 
          if (is.null(spm.info$off.set))
          {
+ 
             if (!is.null(X))
                glm.fit <- glm(y~-1+X.Declan,family=family)
             if (is.null(X))
