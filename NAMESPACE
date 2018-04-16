@@ -10,3 +10,20 @@ import(
   nlme,
   MASS
 )
+
+importFrom("grDevices",
+           "col2rgb", "dev.off", "rgb")
+importFrom("graphics",
+           "abline", "image", "lines", "locator", "par", "plot",
+           "points", "polygon", "rug", "text")
+importFrom("stats",
+           "as.formula", "binomial", "dist", "glm", "lm", "lm.fit",
+           "poisson", "pt", "quantile", "uniroot")
+
+S3method(fitted, spm)
+S3method(lines, spm)
+S3method(plot, spm)
+S3method(predict, spm)
+S3method(print, spm)
+S3method(residuals, spm)
+S3method(summary, spm)

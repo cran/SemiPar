@@ -48,7 +48,7 @@ and examples.
 
      Ganguli, B. and Wand, M.P. (2005)\cr
      \emph{SemiPar 1.0 Users' Manual}.\cr
-     \url{http://www.uow.edu.au/~mwand/SPmanu.pdf}
+     \url{http://matt-wand.utsacademics.info/SPmanu.pdf}
 }
 \author{M.P. Wand 
 \email{mwand@uow.edu.au}
@@ -83,7 +83,7 @@ plot(fit)
 #
 # The current version of the manual is posted on the web-site:
 #
-#     www.uow.edu.au/~mwand/SPmanu.pdf 
+#     http://matt-wand.utsacademics.info/SPmanu.pdf
 }
 \keyword{nonlinear} \keyword{models} \keyword{smooth} \keyword{regression}
 

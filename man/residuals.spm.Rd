@@ -26,7 +26,7 @@ variable and the fitted values.}
 
      Ganguli, B. and Wand, M.P. (2005)\cr
      \emph{SemiPar 1.0 Users' Manual}.\cr
-     \url{http://www.uow.edu.au/~mwand/SPmanu.pdf}
+     \url{http://matt-wand.utsacademics.info/SPmanu.pdf}
 }
 \author{M.P. Wand 
 \email{mwand@uow.edu.au}
